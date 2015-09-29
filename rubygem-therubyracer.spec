@@ -4,7 +4,7 @@
 #
 Name     : rubygem-therubyracer
 Version  : 0.12.2
-Release  : 3
+Release  : 4
 URL      : https://rubygems.org/downloads/therubyracer-0.12.2.gem
 Source0  : https://rubygems.org/downloads/therubyracer-0.12.2.gem
 Summary  : No detailed summary available
