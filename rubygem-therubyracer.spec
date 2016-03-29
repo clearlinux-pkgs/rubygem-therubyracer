@@ -4,23 +4,34 @@
 #
 Name     : rubygem-therubyracer
 Version  : 0.12.2
-Release  : 4
+Release  : 5
 URL      : https://rubygems.org/downloads/therubyracer-0.12.2.gem
 Source0  : https://rubygems.org/downloads/therubyracer-0.12.2.gem
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : MIT
+Requires: rubygem-therubyracer-lib
 BuildRequires : ruby
+BuildRequires : rubygem-bundler
 BuildRequires : rubygem-libv8
 BuildRequires : rubygem-libv8-dev
 BuildRequires : rubygem-rdoc
 BuildRequires : rubygem-ref
+BuildRequires : rubygem-rspec-core
 
 %description
 # therubyracer
 [![Gem Version](https://badge.fury.io/rb/therubyracer.png)](http://badge.fury.io/rb/therubyracer)
 [![Build Status](https://travis-ci.org/cowboyd/therubyracer.png?branch=master)](https://travis-ci.org/cowboyd/therubyracer)
 [![Dependency Status](https://gemnasium.com/cowboyd/therubyracer.png)](https://gemnasium.com/cowboyd/therubyracer)
+
+%package lib
+Summary: lib components for the rubygem-therubyracer package.
+Group: Libraries
+
+%description lib
+lib components for the rubygem-therubyracer package.
+
 
 %prep
 gem unpack %{SOURCE0}
@@ -31,17 +42,17 @@ gem spec %{SOURCE0} -l --ruby > rubygem-therubyracer.gemspec
 gem build rubygem-therubyracer.gemspec
 
 %install
-gem_dir=$(ruby -e'puts Gem.default_dir')
+%global gem_dir $(ruby -e'puts Gem.default_dir')
 gem install -V \
 --local \
 --force \
---install-dir .${gem_dir} \
+--install-dir .%{gem_dir} \
 --bindir .%{_bindir} \
 therubyracer-0.12.2.gem
 
-mkdir -p %{buildroot}${gem_dir}
-cp -pa .${gem_dir}/* \
-%{buildroot}${gem_dir}
+mkdir -p %{buildroot}%{gem_dir}
+cp -pa .%{gem_dir}/* \
+%{buildroot}%{gem_dir}
 
 if [ -d .%{_bindir} ]; then
 mkdir -p %{buildroot}%{_bindir}
@@ -49,327 +60,137 @@ cp -pa .%{_bindir}/* \
 %{buildroot}%{_bindir}/
 fi
 
+
 %files
 %defattr(-,root,root,-)
-/usr/lib64/ruby/gems/2.2.0/cache/therubyracer-0.12.2.gem
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/Object/cdesc-Object.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/UnboundMethod/cdesc-UnboundMethod.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Access/Indices/cdesc-Indices.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Access/Indices/idelete-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Access/Indices/iget-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Access/Indices/indices-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Access/Indices/iquery-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Access/Indices/iset-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Access/Invocation/Aritize/aritize-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Access/Invocation/Aritize/cdesc-Aritize.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Access/Invocation/Method/cdesc-Method.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Access/Invocation/Method/methodcall-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Access/Invocation/Proc/cdesc-Proc.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Access/Invocation/Proc/methodcall-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Access/Invocation/UnboundMethod/cdesc-UnboundMethod.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Access/Invocation/UnboundMethod/methodcall-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Access/Invocation/cdesc-Invocation.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Access/Invocation/methodcall-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Access/Names/accessible_names-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Access/Names/cdesc-Names.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Access/Names/delete-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Access/Names/get-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Access/Names/names-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Access/Names/query-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Access/Names/set-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Access/Names/special%3f-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Access/cdesc-Access.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Array/cdesc-Array.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Array/each-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Array/length-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Array/new-c.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/C/StackTrace/cdesc-StackTrace.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/C/cdesc-C.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Context/%5b%5d%3d-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Context/%5b%5d-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Context/access-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Context/cdesc-Context.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Context/conversion-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Context/current%3d-c.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Context/current-c.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Context/dispose-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Context/enter-c.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Context/enter-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Context/entered%3f-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Context/eval-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Context/link-c.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Context/link-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Context/load-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Context/lock_scope_and_enter-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Context/native-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Context/new-c.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Context/scope-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Context/timeout-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Context/to_ruby-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Context/to_v8-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Accessor/cdesc-Accessor.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Accessor/intercept-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Array/cdesc-Array.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Array/to_v8-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Class/cdesc-Class.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Class/to_template-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Code/InvocationHandler/call-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Code/InvocationHandler/cdesc-InvocationHandler.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Code/InvocationHandler/new-c.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Code/cdesc-Code.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Code/to_template-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Code/to_v8-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Constructor/Args/cdesc-Args.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Constructor/Args/construct-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Constructor/Args/context-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Constructor/Args/link-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Constructor/Args/linkage_call%3f-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Constructor/Args/to_args-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Constructor/call-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Constructor/cdesc-Constructor.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Constructor/new-c.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Fixnum/cdesc-Fixnum.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Fixnum/to_ruby-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Fixnum/to_v8-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Fundamental/cdesc-Fundamental.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Fundamental/to_ruby-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Fundamental/to_v8-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Get/call-c.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Get/cdesc-Get.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Hash/cdesc-Hash.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Hash/to_v8-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/IGet/call-c.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/IGet/cdesc-IGet.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/ISet/call-c.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/ISet/cdesc-ISet.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Identity/cdesc-Identity.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Identity/equate-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Identity/rb_idmap-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Identity/to_ruby-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Identity/to_v8-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Identity/v8_idmap-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Method/MethodCache/%5b%5d%3d-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Method/MethodCache/%5b%5d-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Method/MethodCache/cdesc-MethodCache.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Method/MethodCache/new-c.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Method/cdesc-Method.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Method/to_v8-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/NativeDate/cdesc-NativeDate.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/NativeDate/to_ruby-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/NativeObject/cdesc-NativeObject.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/NativeObject/to_ruby-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/NativeObject/to_v8-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/NativeString/cdesc-NativeString.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/NativeString/to_ruby-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Object/cdesc-Object.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Object/to_ruby-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Object/to_v8-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Primitive/cdesc-Primitive.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Primitive/to_v8-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Proc/cdesc-Proc.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Reference/cdesc-Reference.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Reference/construct%21-c.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Reference/to_v8-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Set/call-c.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Set/cdesc-Set.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/String/cdesc-String.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/String/to_v8-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Symbol/cdesc-Symbol.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Symbol/to_v8-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Time/cdesc-Time.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/Time/to_v8-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/cdesc-Conversion.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/to_ruby-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Conversion/to_v8-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Error-c.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Error/Protect/cdesc-Protect.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Error/Protect/protect-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Error/Try/cdesc-Try.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Error/Try/try-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Error/backtrace-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Error/bilingual_backtrace-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Error/cause-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Error/causes-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Error/cdesc-Error.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Error/in_javascript%3f-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Error/in_ruby%3f-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Error/javascript_backtrace-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Error/new-c.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Error/root_cause-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Error/standard_error_backtrace-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Error/value-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Function/call-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Function/cdesc-Function.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Function/methodcall-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Function/new-c.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Function/new-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Object/%5b%5d%3d-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Object/%5b%5d-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Object/cdesc-Object.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Object/each-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Object/keys-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Object/method_missing-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Object/native-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Object/new-c.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Object/respond_to%3f-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Object/to_s-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Object/to_v8-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Object/values-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/StackFrame/cdesc-StackFrame.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/StackFrame/column-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/StackFrame/constructor%3f-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/StackFrame/eval%3f-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/StackFrame/function_name-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/StackFrame/line_number-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/StackFrame/new-c.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/StackFrame/script_name-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/StackFrame/to_s-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/StackTrace/cdesc-StackTrace.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/StackTrace/each-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/StackTrace/length-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/StackTrace/new-c.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/StackTrace/to_s-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Weak/Cell/Storage/access-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Weak/Cell/Storage/cdesc-Storage.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Weak/Cell/Storage/populate-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Weak/Cell/cdesc-Cell.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Weak/Cell/weakcell-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Weak/Ref/cdesc-Ref.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Weak/Ref/new-c.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Weak/Ref/object-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Weak/WeakValueMap/%5b%5d%3d-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Weak/WeakValueMap/%5b%5d-i.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Weak/WeakValueMap/cdesc-WeakValueMap.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Weak/WeakValueMap/ensure_cleanup-c.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Weak/WeakValueMap/new-c.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/Weak/cdesc-Weak.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/V8/cdesc-V8.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/cache.ri
-/usr/lib64/ruby/gems/2.2.0/doc/therubyracer-0.12.2/ri/ext/v8/page-Makefile.ri
-/usr/lib64/ruby/gems/2.2.0/extensions/x86_64-linux/2.2.0/therubyracer-0.12.2/gem.build_complete
-/usr/lib64/ruby/gems/2.2.0/extensions/x86_64-linux/2.2.0/therubyracer-0.12.2/gem_make.out
-/usr/lib64/ruby/gems/2.2.0/extensions/x86_64-linux/2.2.0/therubyracer-0.12.2/mkmf.log
-/usr/lib64/ruby/gems/2.2.0/extensions/x86_64-linux/2.2.0/therubyracer-0.12.2/v8/init.so
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/.gitignore
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/.travis.yml
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/Changelog.md
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/Gemfile
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/README.md
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/Rakefile
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/benchmarks.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/.RUBYARCHDIR.-.v8.time
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/Makefile
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/accessor.cc
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/accessor.o
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/array.cc
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/array.o
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/backref.cc
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/backref.o
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/constants.cc
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/constants.o
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/constraints.cc
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/constraints.o
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/context.cc
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/context.o
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/date.cc
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/date.o
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/exception.cc
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/exception.o
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/extconf.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/external.cc
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/external.o
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/function.cc
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/function.o
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/gc.cc
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/gc.o
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/handles.cc
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/handles.o
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/heap.cc
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/heap.o
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/init.cc
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/init.o
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/init.so
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/invocation.cc
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/invocation.o
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/locker.cc
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/locker.o
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/message.cc
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/message.o
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/object.cc
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/object.o
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/primitive.cc
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/primitive.o
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/rr.cc
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/rr.h
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/rr.o
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/script.cc
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/script.o
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/signature.cc
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/signature.o
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/stack.cc
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/stack.o
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/string.cc
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/string.o
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/template.cc
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/template.o
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/trycatch.cc
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/trycatch.o
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/v8.cc
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/v8.o
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/value.cc
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/ext/v8/value.o
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/lib/therubyracer.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/lib/v8.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/lib/v8/access.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/lib/v8/access/indices.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/lib/v8/access/invocation.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/lib/v8/access/names.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/lib/v8/array.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/lib/v8/context.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/lib/v8/conversion.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/lib/v8/conversion/array.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/lib/v8/conversion/class.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/lib/v8/conversion/code.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/lib/v8/conversion/fixnum.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/lib/v8/conversion/fundamental.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/lib/v8/conversion/hash.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/lib/v8/conversion/indentity.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/lib/v8/conversion/method.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/lib/v8/conversion/object.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/lib/v8/conversion/primitive.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/lib/v8/conversion/proc.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/lib/v8/conversion/reference.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/lib/v8/conversion/string.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/lib/v8/conversion/symbol.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/lib/v8/conversion/time.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/lib/v8/error.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/lib/v8/function.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/lib/v8/init.so
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/lib/v8/object.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/lib/v8/stack.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/lib/v8/version.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/lib/v8/weak.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/spec/c/array_spec.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/spec/c/constants_spec.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/spec/c/exception_spec.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/spec/c/external_spec.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/spec/c/function_spec.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/spec/c/handles_spec.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/spec/c/locker_spec.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/spec/c/object_spec.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/spec/c/script_spec.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/spec/c/string_spec.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/spec/c/template_spec.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/spec/c/trycatch_spec.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/spec/mem/blunt_spec.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/spec/redjs_spec.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/spec/spec_helper.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/spec/threading_spec.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/spec/v8/context_spec.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/spec/v8/conversion_spec.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/spec/v8/error_spec.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/spec/v8/function_spec.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/spec/v8/object_spec.rb
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/thefrontside.png
-/usr/lib64/ruby/gems/2.2.0/gems/therubyracer-0.12.2/therubyracer.gemspec
-/usr/lib64/ruby/gems/2.2.0/specifications/therubyracer-0.12.2.gemspec
+/usr/lib64/ruby/gems/2.3.0/cache/therubyracer-0.12.2.gem
+/usr/lib64/ruby/gems/2.3.0/extensions/x86_64-linux/2.3.0/therubyracer-0.12.2/gem.build_complete
+/usr/lib64/ruby/gems/2.3.0/extensions/x86_64-linux/2.3.0/therubyracer-0.12.2/gem_make.out
+/usr/lib64/ruby/gems/2.3.0/extensions/x86_64-linux/2.3.0/therubyracer-0.12.2/mkmf.log
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/.gitignore
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/.travis.yml
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/Changelog.md
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/Gemfile
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/README.md
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/Rakefile
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/benchmarks.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/.RUBYARCHDIR.-.v8.time
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/Makefile
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/accessor.cc
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/accessor.o
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/array.cc
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/array.o
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/backref.cc
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/backref.o
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/constants.cc
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/constants.o
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/constraints.cc
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/constraints.o
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/context.cc
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/context.o
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/date.cc
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/date.o
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/exception.cc
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/exception.o
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/extconf.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/external.cc
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/external.o
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/function.cc
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/function.o
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/gc.cc
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/gc.o
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/handles.cc
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/handles.o
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/heap.cc
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/heap.o
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/init.cc
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/init.o
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/invocation.cc
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/invocation.o
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/locker.cc
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/locker.o
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/message.cc
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/message.o
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/object.cc
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/object.o
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/primitive.cc
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/primitive.o
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/rr.cc
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/rr.h
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/rr.o
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/script.cc
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/script.o
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/signature.cc
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/signature.o
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/stack.cc
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/stack.o
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/string.cc
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/string.o
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/template.cc
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/template.o
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/trycatch.cc
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/trycatch.o
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/v8.cc
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/v8.o
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/value.cc
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/value.o
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/lib/therubyracer.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/lib/v8.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/lib/v8/access.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/lib/v8/access/indices.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/lib/v8/access/invocation.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/lib/v8/access/names.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/lib/v8/array.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/lib/v8/context.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/lib/v8/conversion.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/lib/v8/conversion/array.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/lib/v8/conversion/class.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/lib/v8/conversion/code.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/lib/v8/conversion/fixnum.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/lib/v8/conversion/fundamental.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/lib/v8/conversion/hash.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/lib/v8/conversion/indentity.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/lib/v8/conversion/method.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/lib/v8/conversion/object.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/lib/v8/conversion/primitive.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/lib/v8/conversion/proc.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/lib/v8/conversion/reference.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/lib/v8/conversion/string.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/lib/v8/conversion/symbol.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/lib/v8/conversion/time.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/lib/v8/error.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/lib/v8/function.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/lib/v8/object.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/lib/v8/stack.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/lib/v8/version.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/lib/v8/weak.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/spec/c/array_spec.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/spec/c/constants_spec.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/spec/c/exception_spec.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/spec/c/external_spec.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/spec/c/function_spec.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/spec/c/handles_spec.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/spec/c/locker_spec.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/spec/c/object_spec.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/spec/c/script_spec.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/spec/c/string_spec.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/spec/c/template_spec.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/spec/c/trycatch_spec.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/spec/mem/blunt_spec.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/spec/redjs_spec.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/spec/spec_helper.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/spec/threading_spec.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/spec/v8/context_spec.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/spec/v8/conversion_spec.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/spec/v8/error_spec.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/spec/v8/function_spec.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/spec/v8/object_spec.rb
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/thefrontside.png
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/therubyracer.gemspec
+/usr/lib64/ruby/gems/2.3.0/specifications/therubyracer-0.12.2.gemspec
+
+%files lib
+%defattr(-,root,root,-)
+/usr/lib64/ruby/gems/2.3.0/extensions/x86_64-linux/2.3.0/therubyracer-0.12.2/v8/init.so
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/ext/v8/init.so
+/usr/lib64/ruby/gems/2.3.0/gems/therubyracer-0.12.2/lib/v8/init.so
